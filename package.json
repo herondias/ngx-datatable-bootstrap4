@@ -1,6 +1,6 @@
 {
   "name": "ngx-datatable-bootstrap4",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "An Angular data table, with pagination, sorting, expandable rows etc.",
   "keywords": [
     "angular",
