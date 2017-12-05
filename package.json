@@ -17,10 +17,8 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "transpile": "ngc",
-    "package": "rollup -c",
-    "minify": "uglifyjs dist/bundles/datatable.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/datatable.min.js",
-    "build": "npm run transpile && npm run package && npm run minify"
+    "build": "tsc",
+    "serve": "tsc -w"
   },
   "repository": {
     "type": "git",
@@ -29,14 +27,12 @@
   "peerDependencies": {
     "@angular/core": "*"
   },
-  "author": "Fl0r1an <florian.chis@gmail.com>",
+  "author": "Fl0r14n <florian.chis@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@angular/compiler": "*",
     "@angular/compiler-cli": "*",
-    "rollup": "*",
-    "typescript": "*",
-    "uglify-js": "*"
+    "typescript": "*"
   },
   "dependencies": {
     "@angular/common": "*",
@@ -47,5 +43,5 @@
     "rxjs": "*",
     "zone.js": "*"
   },
-  "homepage": "https://github.com/Fl0r1an/ngx-datatable-bootstrap4/"
+  "homepage": "https://github.com/Fl0r14n/ngx-datatable-bootstrap4/"
 }
