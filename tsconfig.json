@@ -1,33 +1,25 @@
-
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "declaration": true,
-    "stripInternal": true,
+    "target": "ES5",
+    "module": "commonjs",
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "module": "es2015",
-    "moduleResolution": "node",
-    "paths": {
-      "@angular/core": ["node_modules/@angular/core"],
-      "rxjs/*": ["node_modules/rxjs/*"]
-    },
     "rootDir": "src",
     "outDir": "dist",
     "sourceMap": true,
-    "inlineSources": true,
-    "target": "es5",
-    "skipLibCheck": true,
+    "noEmitHelpers": true,
     "lib": [
-      "es2015", 
+      "es6",
       "dom"
     ]
   },
+  "compileOnSave": false,
+  "buildOnSave": false,
   "files": [
     "src/index.ts"
   ],
-  "angularCompilerOptions": {
-    "strictMetadataEmit": true
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": true,
+    "useWebpackText": true
   }
 }

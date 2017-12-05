@@ -1,6 +1,6 @@
 {
   "name": "angular-4-data-table-bootstrap-4",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "An Angular 4 data table, with pagination, sorting, expandable rows etc. Bootstrap 4 version.",
   "keywords": [
     "angular",
@@ -24,35 +24,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:afermon/angular-4-data-table-bootstrap-4.git"
+    "url": "git@github.com:Fl0r14n/angular-4-data-table-bootstrap-4.git"
   },
   "peerDependencies": {
-    "@angular/core": "^4.0.1"
+    "@angular/core": "*"
   },
-  "author": "afermon <alex@xicre.com>",
+  "author": "Fl0r1an <florian.chis@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@angular/compiler": "^4.4.4",
-    "@angular/compiler-cli": "^4.4.4",
-    "rollup": "^0.50.0",
-    "typescript": "^2.5.3",
-    "uglify-js": "^3.1.3"
+    "@angular/compiler": "*",
+    "@angular/compiler-cli": "*",
+    "rollup": "*",
+    "typescript": "*",
+    "uglify-js": "*"
   },
   "dependencies": {
-    "@angular/common": "^4.0.1",
-    "@angular/core": "^4.0.1",
-    "@angular/forms": "^4.0.1",
-    "@angular/platform-browser": "^4.2.5",
-    "@angular/platform-browser-dynamic": "^4.0.1",
-    "@angular/platform-server": "^4.4.4",
-    "@types/node": "~8.0.33",
-    "rxjs": "^5.1.0",
-    "ts-node": "~3.3.0",
-    "zone.js": "^0.8.12"
+    "@angular/common": "*",
+    "@angular/core": "*",
+    "@angular/forms": "*",
+    "@angular/platform-browser": "*",
+    "@angular/platform-browser-dynamic": "*",
+    "rxjs": "*",
+    "zone.js": "*"
   },
-  "false": {},
-  "bugs": {
-    "url": "https://github.com/afermon/angular-4-data-table-bootstrap-4/issues"
-  },
-  "homepage": "https://github.com/afermon/angular-4-data-table-bootstrap-4/"
+  "homepage": "https://github.com/Fl0r1an/angular-4-data-table-bootstrap-4/"
 }
