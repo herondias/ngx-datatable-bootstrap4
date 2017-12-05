@@ -1,7 +1,7 @@
 {
-  "name": "angular-4-data-table-bootstrap-4",
+  "name": "ngx-datatable-bootstrap4",
   "version": "0.3.0",
-  "description": "An Angular 4 data table, with pagination, sorting, expandable rows etc. Bootstrap 4 version.",
+  "description": "An Angular data table, with pagination, sorting, expandable rows etc.",
   "keywords": [
     "angular",
     "angular4",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Fl0r14n/angular-4-data-table-bootstrap-4.git"
+    "url": "git@github.com:Fl0r14n/ngx-datatable-bootstrap4.git"
   },
   "peerDependencies": {
     "@angular/core": "*"
@@ -47,5 +47,5 @@
     "rxjs": "*",
     "zone.js": "*"
   },
-  "homepage": "https://github.com/Fl0r1an/angular-4-data-table-bootstrap-4/"
+  "homepage": "https://github.com/Fl0r1an/ngx-datatable-bootstrap4/"
 }
