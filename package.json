@@ -17,8 +17,9 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "serve": "tsc -w"
+    "lint": "tslint --force \"src/**/*.ts\"",
+    "pretest": "npm run lint",
+    "build": "ng-packagr -p ng-package.json"
   },
   "repository": {
     "type": "git",
@@ -32,7 +33,10 @@
   "devDependencies": {
     "@angular/compiler": "*",
     "@angular/compiler-cli": "*",
-    "typescript": "*"
+    "typescript": "*",
+    "tslint": "*",
+    "codelyzer": "*",
+    "ng-packagr": "*"
   },
   "dependencies": {
     "@angular/common": "*",
