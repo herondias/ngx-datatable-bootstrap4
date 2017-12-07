@@ -78,13 +78,13 @@ export class DataTable implements DataTableParams, OnInit {
 
   // event handlers:
   @Output()
-  rowClick = new EventEmitter();
+  rowClick: EventEmitter<{ row: DataTableRow, event: MouseEvent }> = new EventEmitter();
   @Output()
-  rowDoubleClick = new EventEmitter();
+  rowDoubleClick: EventEmitter<{ row: DataTableRow, event: MouseEvent }> = new EventEmitter();
   @Output()
-  headerClick = new EventEmitter();
+  headerClick: EventEmitter<{ column: DataTableColumn, event: MouseEvent }> = new EventEmitter();
   @Output()
-  cellClick = new EventEmitter();
+  cellClick: EventEmitter<{ row: DataTableRow, column: DataTableColumn, event: MouseEvent }> = new EventEmitter();
   @Output()
   reload = new EventEmitter();
 
@@ -161,115 +161,21 @@ export class DataTable implements DataTableParams, OnInit {
     return Math.ceil(this.itemCount / this.limit);
   }
 
-  // setting multiple observable properties simultaneously
-  sort(sortBy: string, asc: boolean) {
-    this.sortBy = sortBy;
-    this.sortAsc = asc;
-  }
-
-  // init
-  ngOnInit() {
-    this._initDefaultValues();
-    this._initDefaultClickEvents();
-    this._updateDisplayParams();
-
-    if (this.autoReload && this._scheduledReload == null) {
-      this.reloadItems();
-    }
-  }
-
-  private _initDefaultValues() {
-    this.indexColumnVisible = this.indexColumn;
-    this.selectColumnVisible = this.selectColumn;
-    this.expandColumnVisible = this.expandableRows;
-  }
-
-  private _initDefaultClickEvents() {
-    this.headerClick.subscribe(tableEvent => this.sortColumn(tableEvent.column));
-    if (this.selectOnRowClick) {
-      this.rowClick.subscribe(tableEvent => tableEvent.row.selected = !tableEvent.row.selected);
-    }
-  }
-
   get reloading() {
     return this._reloading;
-  }
-
-  reloadItems() {
-    this._reloading = true;
-    this.reload.emit(this._getRemoteParameters());
-  }
-
-  private _onReloadFinished() {
-    this._updateDisplayParams();
-
-    this._selectAllCheckbox = false;
-    this._reloading = false;
   }
 
   get displayParams() {
     return this._displayParams;
   }
 
-  _updateDisplayParams() {
-    this._displayParams = {
-      sortBy: this.sortBy,
-      sortAsc: this.sortAsc,
-      offset: this.offset,
-      limit: this.limit
-    };
+  get selectAllCheckbox() {
+    return this._selectAllCheckbox;
   }
 
-  // for avoiding cascading reloads if multiple params are set at once:
-  _triggerReload() {
-    if (this._scheduledReload) {
-      clearTimeout(this._scheduledReload);
-    }
-    this._scheduledReload = setTimeout(() => {
-      this.reloadItems();
-    });
-  }
-
-  public rowClicked(row: DataTableRow, event) {
-    this.rowClick.emit({row, event});
-  }
-
-  public rowDoubleClicked(row: DataTableRow, event) {
-    this.rowDoubleClick.emit({row, event});
-  }
-
-  private headerClicked(column: DataTableColumn, event: MouseEvent) {
-    if (!this._resizeInProgress) {
-      this.headerClick.emit({column, event});
-    } else {
-      this._resizeInProgress = false; // this is because I can't prevent click from mousup of the drag end
-    }
-  }
-
-  private cellClicked(column: DataTableColumn, row: DataTableRow, event: MouseEvent) {
-    this.cellClick.emit({row, column, event});
-  }
-
-  // functions:
-  private _getRemoteParameters(): DataTableParams {
-    let params = <DataTableParams>{};
-
-    if (this.sortBy) {
-      params.sortBy = this.sortBy;
-      params.sortAsc = this.sortAsc;
-    }
-    if (this.pagination) {
-      params.offset = this.offset;
-      params.limit = this.limit;
-    }
-    return params;
-  }
-
-  private sortColumn(column: DataTableColumn) {
-    if (column.sortable) {
-      let ascending = this.sortBy === column.property ? !this.sortAsc : true;
-      this.sort(column.property, ascending);
-    }
+  set selectAllCheckbox(value) {
+    this._selectAllCheckbox = value;
+    this._onSelectAllChanged(value);
   }
 
   get columnCount() {
@@ -283,28 +189,49 @@ export class DataTable implements DataTableParams, OnInit {
     return count;
   }
 
-  public getRowColor(item: any, index: number, row: DataTableRow) {
+  get substituteItems() {
+    return Array.from({length: this.displayParams!.limit - this.items.length});
+  }
+
+  getRowColor(item: any, index: number, row: DataTableRow) {
     if (this.rowColors !== undefined) {
       return (<RowCallback>this.rowColors)(item, row, index);
     }
   }
 
-
-  get selectAllCheckbox() {
-    return this._selectAllCheckbox;
+  // setting multiple observable properties simultaneously
+  sort(sortBy: string, asc: boolean) {
+    this.sortBy = sortBy;
+    this.sortAsc = asc;
   }
 
-  set selectAllCheckbox(value) {
-    this._selectAllCheckbox = value;
-    this._onSelectAllChanged(value);
+  reloadItems() {
+    this._reloading = true;
+    this.reload.emit(this._getRemoteParameters());
   }
 
-  private _onSelectAllChanged(value: boolean) {
-    this.rows.toArray().forEach(row => row.selected = value);
+  rowClicked(row: DataTableRow, event: MouseEvent) {
+    this.rowClick.emit({row, event});
+  }
+
+  rowDoubleClicked(row: DataTableRow, event: MouseEvent) {
+    this.rowDoubleClick.emit({row, event});
+  }
+
+  headerClicked(column: DataTableColumn, event: MouseEvent) {
+    if (!this._resizeInProgress) {
+      this.headerClick.emit({column, event});
+    } else {
+      // this is because I can't prevent click from mousup of the drag end
+      this._resizeInProgress = false;
+    }
+  }
+
+  cellClicked(column: DataTableColumn, row: DataTableRow, event: MouseEvent) {
+    this.cellClick.emit({row, column, event});
   }
 
   onRowSelectChanged(row: DataTableRow) {
-
     // maintain the selectedRow(s) view
     if (this.multiSelect) {
       let index = this.selectedRows.indexOf(row);
@@ -320,7 +247,6 @@ export class DataTable implements DataTableParams, OnInit {
         this.selectedRow = undefined;
       }
     }
-
     // unselect all other rows:
     if (row.selected && !this.multiSelect) {
       this.rows.toArray().filter(row_ => row_.selected).forEach(row_ => {
@@ -331,13 +257,8 @@ export class DataTable implements DataTableParams, OnInit {
     }
   }
 
-  get substituteItems() {
-    return Array.from({length: this.displayParams!.limit - this.items.length});
-  }
-
-  private resizeColumnStart(event: MouseEvent, column: DataTableColumn, columnElement: HTMLElement) {
+  resizeColumnStart(event: MouseEvent, column: DataTableColumn, columnElement: HTMLElement) {
     this._resizeInProgress = true;
-
     drag(event, {
       move: (moveEvent: MouseEvent, dx: number) => {
         if (this._isResizeInLimit(columnElement, dx)) {
@@ -347,16 +268,86 @@ export class DataTable implements DataTableParams, OnInit {
     });
   }
 
+  // init
+  ngOnInit() {
+    this._initDefaultValues();
+    this._initDefaultClickEvents();
+    this._updateDisplayParams();
+    if (this.autoReload && this._scheduledReload == null) {
+      this.reloadItems();
+    }
+  }
+
+  private _initDefaultValues() {
+    this.indexColumnVisible = this.indexColumn;
+    this.selectColumnVisible = this.selectColumn;
+    this.expandColumnVisible = this.expandableRows;
+  }
+
+  private _initDefaultClickEvents() {
+    this.headerClick.subscribe(tableEvent => this._sortColumn(tableEvent.column));
+    if (this.selectOnRowClick) {
+      this.rowClick.subscribe(tableEvent => tableEvent.row.selected = !tableEvent.row.selected);
+    }
+  }
+
+  private _onReloadFinished() {
+    this._updateDisplayParams();
+    this._selectAllCheckbox = false;
+    this._reloading = false;
+  }
+
+  private _updateDisplayParams() {
+    this._displayParams = {
+      sortBy: this.sortBy,
+      sortAsc: this.sortAsc,
+      offset: this.offset,
+      limit: this.limit
+    };
+  }
+
+  private _triggerReload() {
+    // for avoiding cascading reloads if multiple params are set at once:
+    if (this._scheduledReload) {
+      clearTimeout(this._scheduledReload);
+    }
+    this._scheduledReload = setTimeout(() => {
+      this.reloadItems();
+    });
+  }
+
+  private _getRemoteParameters(): DataTableParams {
+    let params = <DataTableParams>{};
+
+    if (this.sortBy) {
+      params.sortBy = this.sortBy;
+      params.sortAsc = this.sortAsc;
+    }
+    if (this.pagination) {
+      params.offset = this.offset;
+      params.limit = this.limit;
+    }
+    return params;
+  }
+
+  private _sortColumn(column: DataTableColumn) {
+    if (column.sortable) {
+      let ascending = this.sortBy === column.property ? !this.sortAsc : true;
+      this.sort(column.property, ascending);
+    }
+  }
+
+  private _onSelectAllChanged(value: boolean) {
+    this.rows.toArray().forEach(row => row.selected = value);
+  }
+
   private _isResizeInLimit(columnElement: HTMLElement, dx: number) {
     /* This is needed because CSS min-width didn't work on table-layout: fixed.
      Without the limits, resizing can make the next column disappear completely,
      and even increase the table width. The current implementation suffers from the fact,
      that offsetWidth sometimes contains out-of-date values. */
-    if ((dx < 0 && (columnElement.offsetWidth + dx) <= this.resizeLimit) ||
+    return !((dx < 0 && (columnElement.offsetWidth + dx) <= this.resizeLimit) ||
       !columnElement.nextElementSibling || // resizing doesn't make sense for the last visible column
-      (dx >= 0 && ((<HTMLElement> columnElement.nextElementSibling).offsetWidth + dx) <= this.resizeLimit)) {
-      return false;
-    }
-    return true;
+      (dx >= 0 && ((<HTMLElement> columnElement.nextElementSibling).offsetWidth + dx) <= this.resizeLimit));
   }
 }
