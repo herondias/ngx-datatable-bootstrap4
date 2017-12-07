@@ -12,7 +12,15 @@ import {
 } from '@angular/core';
 import {DataTableColumn, DataTableRow} from '../../';
 import {drag} from '../../utils/drag';
-import {DataTableParams, DataTableTranslations, defaultTranslations, RowCallback} from '../types';
+import {
+  DataTableCellEvent,
+  DataTableHeaderEvent,
+  DataTableParams,
+  DataTableRowEvent,
+  DataTableTranslations,
+  defaultTranslations,
+  RowCallback
+} from '../types';
 
 
 @Component({
@@ -78,15 +86,15 @@ export class DataTable implements DataTableParams, OnInit {
 
   // event handlers:
   @Output()
-  rowClick: EventEmitter<{ row: DataTableRow, event: MouseEvent }> = new EventEmitter();
+  rowClick: EventEmitter<DataTableRowEvent> = new EventEmitter();
   @Output()
-  rowDoubleClick: EventEmitter<{ row: DataTableRow, event: MouseEvent }> = new EventEmitter();
+  rowDoubleClick: EventEmitter<DataTableRowEvent> = new EventEmitter();
   @Output()
-  headerClick: EventEmitter<{ column: DataTableColumn, event: MouseEvent }> = new EventEmitter();
+  headerClick: EventEmitter<DataTableHeaderEvent> = new EventEmitter();
   @Output()
-  cellClick: EventEmitter<{ row: DataTableRow, column: DataTableColumn, event: MouseEvent }> = new EventEmitter();
+  cellClick: EventEmitter<DataTableCellEvent> = new EventEmitter();
   @Output()
-  reload = new EventEmitter();
+  reload: EventEmitter<DataTableParams> = new EventEmitter();
 
   // UI components:
   @ContentChildren(DataTableColumn)
@@ -95,7 +103,6 @@ export class DataTable implements DataTableParams, OnInit {
   rows: QueryList<DataTableRow>;
   @ContentChild('dataTableExpand')
   expandTemplate: TemplateRef<any>;
-
 
   @Input()
   get items() {

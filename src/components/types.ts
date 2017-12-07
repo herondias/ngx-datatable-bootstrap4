@@ -5,11 +5,11 @@ export type RowCallback = (item: any, row: DataTableRow, index: number) => strin
 export type CellCallback = (item: any, row: DataTableRow, column: DataTableColumn, index: number) => string;
 
 export interface DataTableTranslations {
-  indexColumn: string;
-  selectColumn: string;
-  expandColumn: string;
-  paginationLimit: string;
-  paginationRange: string;
+  indexColumn: string
+  selectColumn: string
+  expandColumn: string
+  paginationLimit: string
+  paginationRange: string
 }
 
 export const defaultTranslations = <DataTableTranslations>{
@@ -21,8 +21,24 @@ export const defaultTranslations = <DataTableTranslations>{
 };
 
 export interface DataTableParams {
-  offset?: number;
-  limit?: number;
-  sortBy?: string;
-  sortAsc?: boolean;
+  offset?: number
+  limit?: number
+  sortBy?: string
+  sortAsc?: boolean
+}
+
+export interface DataTableRowEvent {
+  row?: DataTableRow
+  event?: MouseEvent
+}
+
+export interface DataTableCellEvent {
+  row?: DataTableRow
+  column?: DataTableColumn
+  event?: MouseEvent
+}
+
+export interface DataTableHeaderEvent {
+  column?: DataTableColumn
+  event?: MouseEvent
 }
