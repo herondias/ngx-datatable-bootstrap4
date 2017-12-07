@@ -1,6 +1,6 @@
 {
   "name": "ngx-datatable-bootstrap4",
-  "version": "0.3.4",
+  "version": "0.3.9",
   "description": "An Angular data table, with pagination, sorting, expandable rows etc.",
   "keywords": [
     "angular",
@@ -20,8 +20,7 @@
     "clean": "rimraf dist",
     "lint": "tslint --force \"src/**/*.ts\"",
     "pretest": "npm run lint",
-    "build": "npm run clean && npm run lint && ng-packagr -p ng-package.json",
-    "publish": "npm run build && npm publish dist"
+    "build": "npm run clean && npm run lint && ng-packagr -p ng-package.json"
   },
   "repository": {
     "type": "git",
