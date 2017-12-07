@@ -19,7 +19,7 @@ Check out the [Demo](https://afermon.github.io/angular-4-data-table-bootstrap-4-
 
 ## Installing:
 ```
-npm install git://github.com:Fl0r14n/ngx-datatable-bootstrap4.git --save
+npm install ngx-datatable-bootstrap4 --save
 ```
 
 ## App Requirements

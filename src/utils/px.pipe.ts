@@ -1,19 +1,20 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 
 @Pipe({
   name: 'px'
 })
-export class PixelConverter implements PipeTransform {
+export class PxPipe implements PipeTransform {
+
   transform(value: string | number, args: string[]): any {
     if (value === undefined) {
-        return;
+      return;
     }
     if (typeof value === 'string') {
-        return value;
+      return value;
     }
     if (typeof value === 'number') {
-        return value + 'px';
+      return value + 'px';
     }
   }
 }

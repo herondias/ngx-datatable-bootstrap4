@@ -1,27 +1,29 @@
-import { Directive, ElementRef, Renderer } from '@angular/core';
+import {Directive, ElementRef, Input, Renderer2} from '@angular/core';
 
 
 function isBlank(obj: any): boolean {
   return obj === undefined || obj === null;
 }
 
-@Directive({ selector: '[hide]', inputs: ['hide'] })
-export class Hide {
+@Directive({selector: '[hide]'})
+export class HideDirective {
 
   private _prevCondition: boolean = null;
   private _displayStyle: string;
 
-  constructor(private _elementRef: ElementRef, private _renderer: Renderer) { }
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+  }
 
+  @Input()
   set hide(newCondition: boolean) {
     this.initDisplayStyle();
 
     if (newCondition && (isBlank(this._prevCondition) || !this._prevCondition)) {
       this._prevCondition = true;
-      this._renderer.setElementStyle(this._elementRef.nativeElement, 'display', 'none');
+      this._renderer.setStyle(this._elementRef.nativeElement, 'display', 'none');
     } else if (!newCondition && (isBlank(this._prevCondition) || this._prevCondition)) {
       this._prevCondition = false;
-      this._renderer.setElementStyle(this._elementRef.nativeElement, 'display', this._displayStyle);
+      this._renderer.setStyle(this._elementRef.nativeElement, 'display', this._displayStyle);
     }
   }
 
