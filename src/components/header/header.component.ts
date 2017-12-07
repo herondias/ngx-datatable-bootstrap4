@@ -1,13 +1,10 @@
 import {Component, forwardRef, HostListener, Inject} from '@angular/core';
 import {DataTable} from '../../';
-import {HEADER_STYLE} from './header.style';
-import {HEADER_TEMPLATE} from './header.template';
-
 
 @Component({
   selector: 'data-table-header',
-  template: HEADER_TEMPLATE,
-  styles: [HEADER_STYLE],
+  templateUrl: 'header.component.html',
+  styleUrls: ['header.component.scss']
 })
 export class DataTableHeader {
 

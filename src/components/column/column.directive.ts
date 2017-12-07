@@ -8,24 +8,31 @@ import {CellCallback} from '../types';
 })
 export class DataTableColumn implements OnInit {
 
-  private styleClassObject = {}; // for [ngClass]
+  // for [ngClass]
+  styleClassObject = {};
 
   // init:
-  @Input() header: string;
-  @Input() sortable = false;
-  @Input() resizable = false;
-  @Input() property: string;
-  @Input() styleClass: string;
-  @Input() cellColors: CellCallback;
-
-  // init and state:
-  @Input() width: number | string;
-  @Input() visible = true;
+  @Input()
+  header: string;
+  @Input()
+  sortable = false;
+  @Input()
+  resizable = false;
+  @Input()
+  property: string;
+  @Input()
+  styleClass: string;
+  @Input()
+  cellColors: CellCallback;
+  @Input()
+  width: number | string;
+  @Input()
+  visible = true;
 
   @ContentChild('dataTableCell')
-  cellTemplate;
+  cellTemplate: any;
   @ContentChild('dataTableHeader')
-  headerTemplate;
+  headerTemplate: any;
 
   getCellColor(row: DataTableRow, index: number) {
     if (this.cellColors !== undefined) {

@@ -13,14 +13,12 @@ import {
 import {DataTableColumn, DataTableRow} from '../../';
 import {drag} from '../../utils/drag';
 import {DataTableParams, DataTableTranslations, defaultTranslations, RowCallback} from '../types';
-import {TABLE_STYLE} from './table.style';
-import {TABLE_TEMPLATE} from './table.template';
 
 
 @Component({
   selector: 'data-table',
-  template: TABLE_TEMPLATE,
-  styles: [TABLE_STYLE]
+  templateUrl: 'table.component.html',
+  styleUrls: ['table.component.scss']
 })
 export class DataTable implements DataTableParams, OnInit {
 
@@ -35,7 +33,7 @@ export class DataTable implements DataTableParams, OnInit {
   private _offset = 0;
   private _limit = 10;
   private _items: any[] = [];
-  private _scheduledReload = null;
+  private _scheduledReload: number = null;
   private _selectAllCheckbox = false;
   private _displayParams = <DataTableParams>{};
   private _reloading = false;
