@@ -1,5 +1,5 @@
-import {DataTableColumn} from './column.directive';
-import {DataTableRow} from './row.component';
+import {DataTableColumn} from './column/column.directive';
+import {DataTableRow} from './row/row.component';
 
 export type RowCallback = (item: any, row: DataTableRow, index: number) => string;
 export type CellCallback = (item: any, row: DataTableRow, column: DataTableColumn, index: number) => string;

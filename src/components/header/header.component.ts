@@ -1,7 +1,7 @@
 import {Component, forwardRef, HostListener, Inject} from '@angular/core';
+import {DataTable} from '../../';
 import {HEADER_STYLE} from './header.style';
 import {HEADER_TEMPLATE} from './header.template';
-import {DataTable} from './table.component';
 
 
 @Component({

@@ -10,12 +10,11 @@ import {
   TemplateRef,
   ViewChildren
 } from '@angular/core';
-import {drag} from '../utils/drag';
-import {DataTableColumn} from './column.directive';
-import {DataTableRow} from './row.component';
+import {DataTableColumn, DataTableRow} from '../../';
+import {drag} from '../../utils/drag';
+import {DataTableParams, DataTableTranslations, defaultTranslations, RowCallback} from '../types';
 import {TABLE_STYLE} from './table.style';
 import {TABLE_TEMPLATE} from './table.template';
-import {DataTableParams, DataTableTranslations, defaultTranslations, RowCallback} from './types';
 
 
 @Component({

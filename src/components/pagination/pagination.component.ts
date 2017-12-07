@@ -1,7 +1,7 @@
 import {Component, forwardRef, Inject} from '@angular/core';
+import {DataTable} from '../../';
 import {PAGINATION_STYLE} from './pagination.style';
 import {PAGINATION_TEMPLATE} from './pagination.template';
-import {DataTable} from './table.component';
 
 
 @Component({
@@ -39,7 +39,8 @@ export class DataTablePagination {
   }
 
   set limit(value) {
-    this.dataTable.limit = Number(<any>value); // TODO better way to handle that value of number <input> is string?
+    // TODO better way to handle that value of number <input> is string?
+    this.dataTable.limit = Number(<any>value);
   }
 
   get page() {

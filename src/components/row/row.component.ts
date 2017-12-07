@@ -1,7 +1,7 @@
 import {Component, EventEmitter, forwardRef, Inject, Input, OnDestroy, Output} from '@angular/core';
+import {DataTable} from '../../';
 import {ROW_STYLE} from './row.style';
 import {ROW_TEMPLATE} from './row.template';
-import {DataTable} from './table.component';
 
 
 @Component({
