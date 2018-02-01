@@ -1,8 +1,9 @@
 /* bootstrap override: */
 
-:host /deep/ .data-table.table > tbody+tbody {
+:host /deep/ .data-table.table > tbody + tbody {
   border-top: none;
 }
+
 :host /deep/ .data-table.table td {
   vertical-align: middle;
 }
@@ -16,6 +17,7 @@
 :host /deep/ .row-odd {
   background-color: #F6F6F6;
 }
+
 :host /deep/ .row-even {
 }
 
@@ -23,6 +25,7 @@
 :host /deep/ .data-table .data-table-row:hover {
   background-color: #ECECEC;
 }
+
 /* table itself: */
 
 .data-table {
@@ -35,28 +38,36 @@
 .column-header {
   position: relative;
 }
+
 .expand-column-header {
   width: 50px;
 }
+
 .select-column-header {
   width: 50px;
   text-align: center;
 }
+
 .index-column-header {
   width: 40px;
 }
+
 .column-header.sortable {
   cursor: pointer;
 }
+
 .column-header .column-sort-icon {
   float: right;
 }
+
 .column-header.resizable .column-sort-icon {
   margin-right: 8px;
 }
+
 .column-header .column-sort-icon .column-sortable-icon {
   color: lightgray;
 }
+
 .column-header .column-resize-handle {
   position: absolute;
   top: 0;

@@ -1,7 +1,5 @@
 ## Angular Data Table Bootstrap 4
 
-This is a forked version of https://www.npmjs.com/package/angular-2-data-table that has been updated to Bootstrap 4.
-
 A simple Angular data table, with built-in solutions for features including:
 
 * pagination
@@ -15,12 +13,20 @@ The component can be used not just with local data, but remote resources too: fo
 
 The templates use bootstrap CSS class names, so the component requires a bootstrap .css file to be present in the application using it.
 
-Check out the [Demo](https://afermon.github.io/angular-4-data-table-bootstrap-4-demo) and its [Code](https://github.com/afermon/angular-4-data-table-bootstrap-4-demo) for examples of how to use it.
-
 ## Installing:
 ```
 npm install ngx-datatable-bootstrap4 --save
 ```
+## Run demos
+
+checkout the project
+
+```angular2html
+npm intall
+npm start 
+```
+
+then browse to http://localhost:8080
 
 ## App Requirements
 * Bootstrap 4
