@@ -1,12 +1,11 @@
 <div class="data-table-header">
   <h4 class="title" [textContent]="dataTable.headerTitle"></h4>
   <div class="button-panel">
-    <button type="button" class="btn btn-default btn-sm refresh-button"
-            (click)="dataTable.reloadItems()">
+    <button type="button" class="btn btn-default btn-sm refresh-button" (click)="dataTable.reloadItems()">
       <i class="fa fa-refresh"></i>
     </button>
     <button type="button" class="btn btn-default btn-sm column-selector-button" [class.active]="columnSelectorOpen"
-            (click)="columnSelectorOpen = !columnSelectorOpen; $event.stopPropagation()" >
+            (click)="columnSelectorOpen = !columnSelectorOpen; $event.stopPropagation()">
       <i class="fa fa-list"></i>
     </button>
     <div class="column-selector-wrapper" (click)="$event.stopPropagation()">

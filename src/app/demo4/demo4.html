@@ -1,0 +1,42 @@
+<div style="margin: auto; max-width: 1000px; margin-top:50px; margin-bottom: 50px;">
+  <data-table [items]="items" headerTitle="Custom colum headers"
+              [itemCount]="count"
+              (reload)="reloadFilms($event)"
+              [limit]="8"
+              [sortBy]="'rating'">
+    <div data-table-column property="title" header="Title" sortable="true" resizable="true"></div>
+    <div data-table-column property="year" header="Year" sortable="true" resizable="true"></div>
+    <div data-table-column [width]="600">
+      <ng-template #dataTableHeader let-item="item">
+        <div class="card-group">
+          <div class="card border-0"></div>
+          <div class="card border-0" *ngFor="let week of getWeeks(today)">
+            <div class="card-body p-0 small text-center">
+              <div>wk<br/>{{week}}</div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #dataTableCell let-item="item">
+        <div class="card-group">
+          <div class="card border-0 bg-transparent">
+            <div class="card-body p-0 small text-center">
+              Rating
+            </div>
+            <div class="card-body p-0 small text-center">
+              Actual
+            </div>
+          </div>
+          <div class="card border-0 bg-transparent" *ngFor="let week of getWeeks(today)">
+            <div class="card-body p-0 small text-center">
+              {{getRandomValue(item.rating, 10)}}
+            </div>
+            <div class="card-body p-0 small text-center">
+              {{getRandomValue(5, 10)}}
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </data-table>
+</div>

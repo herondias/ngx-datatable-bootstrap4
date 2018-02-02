@@ -7,16 +7,18 @@ import {DataTableModule} from '../datatable';
 
 import {AppComponent} from './app.component';
 
-import {DataTableDemo1} from './demo1/data-table-demo1';
-import {DataTableDemo2} from './demo2/data-table-demo2';
-import {DataTableDemo3} from './demo3/data-table-demo3';
+import {Demo1} from './demo1/demo1';
+import {Demo2} from './demo2/demo2';
+import {Demo3} from './demo3/demo3';
+import {Demo4} from './demo4/demo4';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DataTableDemo1,
-    DataTableDemo2,
-    DataTableDemo3
+    Demo1,
+    Demo2,
+    Demo3,
+    Demo4
   ],
   imports: [
     BrowserModule,

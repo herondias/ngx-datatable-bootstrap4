@@ -1,0 +1,11 @@
+:host /deep/ .data-table > tbody {
+  tr{
+    background-color: #ffffff;
+    height: 50px;
+    border-bottom: 3px solid #f8fafb;
+    td.column-code {
+      color: #0990ec;
+      text-decoration: underline;
+    }
+  }
+}

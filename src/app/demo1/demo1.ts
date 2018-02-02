@@ -1,15 +1,15 @@
 import {Component} from '@angular/core';
 import {DataTableParams, DataTableResource, DataTableRowEvent} from '../../datatable';
-import persons from './data-table-demo1-data';
+import persons from './demo1-data';
 
 
 @Component({
-  selector: 'data-table-demo-1',
+  selector: 'demo-1',
   providers: [],
-  templateUrl: './data-table-demo1.html',
-  styleUrls: ['./data-table-demo1.scss']
+  templateUrl: 'demo1.html',
+  styleUrls: ['demo1.scss']
 })
-export class DataTableDemo1 {
+export class Demo1 {
 
   itemResource = new DataTableResource(persons);
   items: any = [];

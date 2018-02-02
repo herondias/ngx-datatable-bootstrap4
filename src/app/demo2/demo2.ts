@@ -1,13 +1,13 @@
 import {Component, ViewChild} from '@angular/core';
 import {DataTable, DataTableParams, DataTableResource} from '../../datatable';
-import {cars} from './data-table-demo2-data';
+import {cars} from './demo2-data';
 
 
 @Component({
-  selector: 'data-table-demo-2',
-  templateUrl: './data-table-demo2.html'
+  selector: 'demo-2',
+  templateUrl: 'demo2.html'
 })
-export class DataTableDemo2 {
+export class Demo2 {
 
   carResource = new DataTableResource(cars);
   cars: any = [];
@@ -31,7 +31,6 @@ export class DataTableDemo2 {
   carClicked(car: any) {
     alert(car.model);
   }
-
 
   rowColors(car: any) {
     if (car.year >= this.yearLimit) {
