@@ -34,8 +34,4 @@ export class Demo4 {
     }
     return result;
   }
-
-  private getRandomValue(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
 }

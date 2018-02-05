@@ -3,7 +3,8 @@
               [itemCount]="count"
               (reload)="reloadFilms($event)"
               [limit]="8"
-              [sortBy]="'rating'">
+              [sortBy]="'rating'"
+              [substituteRows]="false">
     <div data-table-column property="title" header="Title" sortable="true" resizable="true"></div>
     <div data-table-column property="year" header="Year" sortable="true" resizable="true"></div>
     <div data-table-column [width]="600">
@@ -27,12 +28,12 @@
               Actual
             </div>
           </div>
-          <div class="card border-0 bg-transparent" *ngFor="let week of getWeeks(today)">
+          <div class="card border-0 bg-transparent" *ngFor="let week of getWeeks(today); let index=index">
             <div class="card-body p-0 small text-center">
-              {{getRandomValue(item.rating, 10)}}
+              {{item.expected[index]}}
             </div>
             <div class="card-body p-0 small text-center">
-              {{getRandomValue(5, 10)}}
+              {{item.rating[index]}}
             </div>
           </div>
         </div>
