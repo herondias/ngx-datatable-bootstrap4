@@ -3,6 +3,7 @@ import {
   ContentChild,
   ContentChildren,
   EventEmitter,
+  forwardRef,
   Input,
   OnInit,
   Output,
@@ -10,7 +11,7 @@ import {
   TemplateRef,
   ViewChildren
 } from '@angular/core';
-import {DataTableColumn, DataTableRow} from '../../';
+import {DataTableColumn, DataTableRow, DataTableTitle} from '../../';
 import {drag} from '../../utils/drag';
 import {
   DataTableCellEvent,
@@ -54,10 +55,6 @@ export class DataTable implements DataTableParams, OnInit {
   @Input()
   itemCount: number;
   @Input()
-  headerTitle: string;
-  @Input()
-  header = true;
-  @Input()
   pagination = true;
   @Input()
   indexColumn = true;
@@ -97,11 +94,13 @@ export class DataTable implements DataTableParams, OnInit {
   reload: EventEmitter<DataTableParams> = new EventEmitter();
 
   // UI components:
+  @ContentChild(forwardRef(() => DataTableTitle))
+  title: DataTableTitle;
   @ContentChildren(DataTableColumn)
   columns: QueryList<DataTableColumn>;
   @ViewChildren(DataTableRow)
   rows: QueryList<DataTableRow>;
-  @ContentChild('dataTableExpand')
+  @ContentChild('expandTemplate')
   expandTemplate: TemplateRef<any>;
 
   @Input()

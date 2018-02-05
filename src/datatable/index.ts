@@ -6,6 +6,7 @@ import {DataTableHeader} from './components/header/header.component';
 import {DataTablePagination} from './components/pagination/pagination.component';
 import {DataTableRow} from './components/row/row.component';
 import {DataTable} from './components/table/table.component';
+import {DataTableTitle} from './components/title/title.directive';
 import {HideDirective} from './utils/hide.directive';
 import {MinPipe} from './utils/min.pipe';
 import {PxPipe} from './utils/px.pipe';
@@ -13,16 +14,25 @@ import {PxPipe} from './utils/px.pipe';
 export * from './components/types';
 export * from './tools/data-table-resource';
 
-export {DataTable, DataTableColumn, DataTableRow, DataTablePagination, DataTableHeader};
-export const DATA_TABLE_DIRECTIVES = [DataTable, DataTableColumn];
-
+export {DataTable, DataTableColumn, DataTableRow, DataTablePagination, DataTableHeader, DataTableTitle};
 
 @NgModule({
-  imports: [CommonModule, FormsModule],
-  declarations: [
-    DataTable, DataTableColumn, DataTableRow, DataTablePagination, DataTableHeader, PxPipe, HideDirective, MinPipe
+  imports: [
+    CommonModule,
+    FormsModule
   ],
-  exports: [DataTable, DataTableColumn]
+  declarations: [
+    DataTable,
+    DataTableColumn,
+    DataTableTitle,
+    DataTableRow,
+    DataTablePagination,
+    DataTableHeader,
+    PxPipe,
+    HideDirective,
+    MinPipe
+  ],
+  exports: [DataTable, DataTableColumn, DataTableTitle]
 })
 export class DataTableModule {
 }

@@ -1,10 +1,9 @@
-import {ContentChild, Directive, Input, OnInit} from '@angular/core';
+import {ContentChild, Directive, Input, OnInit, TemplateRef} from '@angular/core';
 import {DataTableRow} from '../../';
 import {CellCallback} from '../types';
 
-
 @Directive({
-  selector: '[data-table-column]'
+  selector: 'data-table-column'
 })
 export class DataTableColumn implements OnInit {
 
@@ -29,10 +28,10 @@ export class DataTableColumn implements OnInit {
   @Input()
   visible = true;
 
-  @ContentChild('dataTableCell')
-  cellTemplate: any;
-  @ContentChild('dataTableHeader')
-  headerTemplate: any;
+  @ContentChild('cellTemplate')
+  cellTemplate: TemplateRef<any>;
+  @ContentChild('headerTemplate')
+  headerTemplate: TemplateRef<any>;
 
   getCellColor(row: DataTableRow, index: number) {
     if (this.cellColors !== undefined) {
