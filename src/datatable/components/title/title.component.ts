@@ -2,11 +2,11 @@ import {Component, forwardRef, HostListener, Inject} from '@angular/core';
 import {DataTable} from '../../';
 
 @Component({
-  selector: 'data-table-header',
-  templateUrl: 'header.component.html',
-  styleUrls: ['header.component.scss']
+  selector: 'data-table-title',
+  templateUrl: 'title.component.html',
+  styleUrls: ['title.component.scss']
 })
-export class DataTableHeader {
+export class DataTableTitleComponent {
 
   columnSelectorOpen = false;
 

@@ -5,9 +5,9 @@
               [limit]="8"
               [sortBy]="'rating'"
               [substituteRows]="false">
-    <data-table-title [controls]="true">
+    <data-table-title title="Custom Title" [controls]="false">
       <ng-template #titleTemplate let-items="items">
-        <span class="text-right w-100">Custom header text</span>
+        <div>Custom header text</div>
       </ng-template>
     </data-table-title>
 

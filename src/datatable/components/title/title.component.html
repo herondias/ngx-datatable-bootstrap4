@@ -1,9 +1,9 @@
-<div class="data-table-header">
-  <h4 *ngIf="!dataTable.title.titleTemplate" class="title" [textContent]="dataTable.title.title"></h4>
-  <span *ngIf="dataTable.title.titleTemplate"
-       [ngTemplateOutlet]="dataTable.title.titleTemplate" [ngTemplateOutletContext]="{items: dataTable.items}">
-  </span>
-  <span class="pull-right" *ngIf="dataTable.title.controls">
+<div class="navbar">
+  <h4 class="title" [textContent]="dataTable.title.title"></h4>
+  <ng-container *ngIf="dataTable.title.titleTemplate" [ngTemplateOutlet]="dataTable.title.titleTemplate"
+                [ngTemplateOutletContext]="{items: dataTable.items}">
+  </ng-container>
+  <div *ngIf="dataTable.title.controls">
     <button type="button" class="btn btn-default btn-sm refresh-button" (click)="dataTable.reloadItems()">
       <i class="fa fa-refresh"></i>
     </button>
@@ -39,5 +39,5 @@
         </div>
       </div>
     </div>
-  </span>
+  </div>
 </div>
