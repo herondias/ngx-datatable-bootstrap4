@@ -7,7 +7,24 @@
               [substituteRows]="false">
     <data-table-title title="Custom Title" [controls]="false">
       <ng-template #titleTemplate let-items="items">
-        <div>Custom header text</div>
+        <div class="card-group" style="width: 600px">
+          <div class="card border-0" (click)="decDate()">
+            <button type="button" class="btn btn-light">
+              <strong class="fa fa-angle-left text-primary"></strong>
+            </button>
+          </div>
+          <div class="card border-0" *ngFor="let month of months">
+            <div class="card-body p-0 small text-center">
+              <strong>{{month.month}}</strong>
+              <br/>{{month.year}}
+            </div>
+          </div>
+          <div class="card border-0" (click)="incDate()">
+            <button type="button" class="btn btn-light">
+              <strong class="fa fa-angle-right text-primary"></strong>
+            </button>
+          </div>
+        </div>
       </ng-template>
     </data-table-title>
 
@@ -19,7 +36,7 @@
       <ng-template #headerTemplate let-item="item">
         <div class="card-group">
           <div class="card border-0"></div>
-          <div class="card border-0" *ngFor="let week of getWeeks(today)">
+          <div class="card border-0" *ngFor="let week of weeks">
             <div class="card-body p-0 small text-center">
               <div>wk<br/>{{week}}</div>
             </div>
@@ -36,7 +53,7 @@
               Actual
             </div>
           </div>
-          <div class="card border-0 bg-transparent" *ngFor="let week of getWeeks(today); let index=index">
+          <div class="card border-0 bg-transparent" *ngFor="let week of weeks; let index=index">
             <div class="card-body p-0 small text-center">
               {{item.expected[index]}}
             </div>

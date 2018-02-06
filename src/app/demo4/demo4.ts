@@ -15,23 +15,41 @@ export class Demo4 {
   count = 0;
   today = new Date('2018-01-10');
   datePipe = new DatePipe('en-US');
+  weeks: any[];
+  months: any[];
 
   constructor() {
     this.filmResource.count().then(count => this.count = count);
+    this.constructDates(this.today);
   }
 
   reloadFilms(params: DataTableParams) {
     this.filmResource.query(params).then(vals => this.items = vals);
   }
 
-  private getWeeks(date: Date, limit = 10): number[] {
+  private constructDates(date: Date, limit = 10) {
     const weekMs = 1000 * 3600 * 24 * 7;
     date = new Date(date.getTime() - weekMs * 4);
-    let result = [];
+    const result = [];
     for (let i = 0; i < limit; i++) {
-      result.push(this.datePipe.transform(date, 'w'));
+      result.push({
+        week: this.datePipe.transform(date, 'w'),
+        month: this.datePipe.transform(date, 'MMMM'),
+        year: this.datePipe.transform(date, 'yyyy')
+      });
       date = new Date(date.getTime() + weekMs);
     }
-    return result;
+    this.weeks = result.map((value) => value.week);
+    this.months = result.filter((value, index, self) => index === self.findIndex(val => val.month === value.month));
+  }
+
+  private incDate() {
+    this.today.setMonth(this.today.getMonth() + 1);
+    this.constructDates(this.today);
+  }
+
+  private decDate() {
+    this.today.setMonth(this.today.getMonth() - 1);
+    this.constructDates(this.today);
   }
 }
