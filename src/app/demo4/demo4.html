@@ -7,23 +7,32 @@
               [substituteRows]="false">
     <data-table-title title="Custom Title" [controls]="false">
       <ng-template #titleTemplate let-items="items">
-        <div class="card-group" style="width: 600px">
-          <div class="card border-0" (click)="decDate()">
-            <button type="button" class="btn btn-light">
-              <strong class="fa fa-angle-left text-primary"></strong>
-            </button>
-          </div>
-          <div class="card border-0" *ngFor="let month of months">
-            <div class="card-body p-0 small text-center">
-              <strong>{{month.month}}</strong>
-              <br/>{{month.year}}
-            </div>
-          </div>
-          <div class="card border-0" (click)="incDate()">
-            <button type="button" class="btn btn-light">
-              <strong class="fa fa-angle-right text-primary"></strong>
-            </button>
-          </div>
+        <div class="calendar-table-wrapper">
+          <table class="calendar-table small w-100">
+            <tbody>
+            <tr>
+              <td class="calendar-control"></td>
+              <td *ngFor="let week of weeks">
+              </td>
+              <td class="calendar-control"></td>
+            </tr>
+            <tr>
+              <td class="calendar-control text-center">
+                <button type="button" class="btn btn-light" (click)="decDate()">
+                  <strong class="fa fa-angle-left text-primary"></strong>
+                </button>
+              </td>
+              <td *ngFor="let month of months" [attr.colspan]="month.colspan">
+                <strong>{{month.month}}</strong><br/>{{month.year}}
+              </td>
+              <td class="calendar-control text-center">
+                <button type="button" class="btn btn-light" (click)="incDate()">
+                  <strong class="fa fa-angle-right text-primary"></strong>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </ng-template>
     </data-table-title>
@@ -34,34 +43,34 @@
     </data-table-column>
     <data-table-column [width]="600">
       <ng-template #headerTemplate let-item="item">
-        <div class="card-group">
-          <div class="card border-0"></div>
-          <div class="card border-0" *ngFor="let week of weeks">
-            <div class="card-body p-0 small text-center">
+        <table class="calendar-table small w-100 text-center">
+          <tr>
+            <td class="calendar-control"></td>
+            <td *ngFor="let week of weeks">
               <div>wk<br/>{{week}}</div>
-            </div>
-          </div>
-        </div>
+            </td>
+            <td class="calendar-control"></td>
+          </tr>
+        </table>
       </ng-template>
+
       <ng-template #cellTemplate let-item="item">
-        <div class="card-group">
-          <div class="card border-0 bg-transparent">
-            <div class="card-body p-0 small text-center">
-              Rating
-            </div>
-            <div class="card-body p-0 small text-center">
-              Actual
-            </div>
-          </div>
-          <div class="card border-0 bg-transparent" *ngFor="let week of weeks; let index=index">
-            <div class="card-body p-0 small text-center">
+        <table class="calendar-table small w-100 text-center">
+          <tr class="border-0 bg-transparent">
+            <td class="calendar-control">Rating</td>
+            <td *ngFor="let week of weeks; let index=index">
               {{item.expected[index]}}
-            </div>
-            <div class="card-body p-0 small text-center">
+            </td>
+            <td class="calendar-control"></td>
+          </tr>
+          <tr class="border-0 bg-transparent">
+            <td class="calendar-control">Actual</td>
+            <td *ngFor="let week of weeks; let index=index">
               {{item.rating[index]}}
-            </div>
-          </div>
-        </div>
+            </td>
+            <td class="calendar-control"></td>
+          </tr>
+        </table>
       </ng-template>
     </data-table-column>
   </data-table>

@@ -40,7 +40,18 @@ export class Demo4 {
       date = new Date(date.getTime() + weekMs);
     }
     this.weeks = result.map((value) => value.week);
-    this.months = result.filter((value, index, self) => index === self.findIndex(val => val.month === value.month));
+    let months = [];
+    for (let week of result) {
+      const index = months.findIndex(val => val.month === week.month);
+      if (index < 0) {
+        week.colspan = 1;
+        months.push(week);
+      } else {
+        months[index].colspan++;
+      }
+    }
+    this.months = months;
+    console.log(result);
   }
 
   private incDate() {
