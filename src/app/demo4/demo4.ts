@@ -3,6 +3,14 @@ import {Component} from '@angular/core';
 import {DataTableParams, DataTableResource} from '../../datatable';
 import {films} from './demo4-data';
 
+interface Film {
+  title?: string
+  year?: number
+  expected?: number[]
+  rating?: number[]
+  director?: string
+}
+
 @Component({
   selector: 'demo-4',
   templateUrl: './demo4.html',
@@ -10,8 +18,8 @@ import {films} from './demo4-data';
 })
 export class Demo4 {
 
-  filmResource = new DataTableResource(films);
-  items = [];
+  filmResource = new DataTableResource<Film>(films);
+  items: Film[] = [];
   count = 0;
   today = new Date('2018-01-10');
   datePipe = new DatePipe('en-US');
@@ -51,7 +59,6 @@ export class Demo4 {
       }
     }
     this.months = months;
-    console.log(result);
   }
 
   private incDate() {

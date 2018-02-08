@@ -7,9 +7,9 @@ import {DataTable} from '../../';
   templateUrl: 'pagination.component.html',
   styleUrls: ['pagination.component.scss']
 })
-export class DataTablePagination {
+export class DataTablePagination<T> {
 
-  constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable) {
+  constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable<T>) {
   }
 
   pageBack() {

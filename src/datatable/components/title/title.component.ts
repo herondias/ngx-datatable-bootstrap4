@@ -6,11 +6,11 @@ import {DataTable} from '../../';
   templateUrl: 'title.component.html',
   styleUrls: ['title.component.scss']
 })
-export class DataTableTitleComponent {
+export class DataTableTitleComponent<T> {
 
   columnSelectorOpen = false;
 
-  constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable) {
+  constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable<T>) {
   }
 
   @HostListener('document:click', ['$event'])

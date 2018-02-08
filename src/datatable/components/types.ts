@@ -1,8 +1,8 @@
 import {DataTableColumn} from './column/column.directive';
 import {DataTableRow} from './row/row.component';
 
-export type RowCallback = (item: any, row: DataTableRow, index: number) => string;
-export type CellCallback = (item: any, row: DataTableRow, column: DataTableColumn, index: number) => string;
+export type RowCallback<T> = (item: any, row: DataTableRow<T>, index: number) => string;
+export type CellCallback<T> = (item: any, row: DataTableRow<T>, column: DataTableColumn<T>, index: number) => string;
 
 export interface DataTableTranslations {
   indexColumn: string
@@ -27,18 +27,18 @@ export interface DataTableParams {
   sortAsc?: boolean
 }
 
-export interface DataTableRowEvent {
-  row?: DataTableRow
+export interface DataTableRowEvent<T> {
+  row?: DataTableRow<T>
   event?: MouseEvent
 }
 
-export interface DataTableCellEvent {
-  row?: DataTableRow
-  column?: DataTableColumn
+export interface DataTableCellEvent<T> {
+  row?: DataTableRow<T>
+  column?: DataTableColumn<T>
   event?: MouseEvent
 }
 
-export interface DataTableHeaderEvent {
-  column?: DataTableColumn
+export interface DataTableHeaderEvent<T> {
+  column?: DataTableColumn<T>
   event?: MouseEvent
 }

@@ -2,6 +2,13 @@ import {Component, ViewChild} from '@angular/core';
 import {DataTable, DataTableParams, DataTableResource, DataTableTranslations} from '../../datatable';
 import {films} from './demo3-data';
 
+interface Film {
+  title?: string
+  year?: number
+  rating?: number
+  director?: string
+  description?: string
+}
 
 @Component({
   selector: 'demo-3',
@@ -10,8 +17,8 @@ import {films} from './demo3-data';
 })
 export class Demo3 {
 
-  filmResource = new DataTableResource(films);
-  films: any = [];
+  filmResource = new DataTableResource<Film>(films);
+  films: Film[] = [];
   filmCount = 0;
   // special params:
   translations = <DataTableTranslations>{
@@ -22,7 +29,7 @@ export class Demo3 {
     paginationRange: 'Result range'
   };
 
-  @ViewChild(DataTable) filmsTable: DataTable;
+  @ViewChild(DataTable) filmsTable: DataTable<Film>;
 
   constructor() {
     this.filmResource.count().then(count => this.filmCount = count);

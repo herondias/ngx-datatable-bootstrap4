@@ -5,7 +5,7 @@ import {CellCallback} from '../types';
 @Directive({
   selector: 'data-table-column'
 })
-export class DataTableColumn implements OnInit {
+export class DataTableColumn<T> implements OnInit {
 
   // for [ngClass]
   styleClassObject = {};
@@ -22,7 +22,7 @@ export class DataTableColumn implements OnInit {
   @Input()
   styleClass: string;
   @Input()
-  cellColors: CellCallback;
+  cellColors: CellCallback<T>;
   @Input()
   width: number | string;
   @Input()
@@ -33,9 +33,9 @@ export class DataTableColumn implements OnInit {
   @ContentChild('headerTemplate')
   headerTemplate: TemplateRef<any>;
 
-  getCellColor(row: DataTableRow, index: number) {
+  getCellColor(row: DataTableRow<T>, index: number) {
     if (this.cellColors !== undefined) {
-      return (<CellCallback>this.cellColors)(row.item, row, this, index);
+      return (<CellCallback<T>>this.cellColors)(row.item, row, this, index);
     }
   }
 

@@ -2,6 +2,14 @@ import {Component} from '@angular/core';
 import {DataTableParams, DataTableResource, DataTableRowEvent} from '../../datatable';
 import persons from './demo1-data';
 
+interface Person {
+  name?: string
+  email?: string
+  jobTitle?: string
+  active?: boolean
+  phoneNumber?: string
+  date?: string | Date
+}
 
 @Component({
   selector: 'demo-1',
@@ -11,8 +19,8 @@ import persons from './demo1-data';
 })
 export class Demo1 {
 
-  itemResource = new DataTableResource(persons);
-  items: any = [];
+  itemResource = new DataTableResource<Person>(persons);
+  items: Person[] = [];
   itemCount = 0;
 
   constructor() {
@@ -25,11 +33,11 @@ export class Demo1 {
 
   // special properties:
 
-  rowClick(rowEvent: DataTableRowEvent) {
+  rowClick(rowEvent: DataTableRowEvent<Person>) {
     console.log('Clicked: ' + rowEvent.row.item.name);
   }
 
-  rowDoubleClick(rowEvent: DataTableRowEvent) {
+  rowDoubleClick(rowEvent: DataTableRowEvent<Person>) {
     alert('Double clicked: ' + rowEvent.row.item.name);
   }
 

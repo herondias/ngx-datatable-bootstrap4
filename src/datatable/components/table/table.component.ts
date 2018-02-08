@@ -29,7 +29,7 @@ import {
   templateUrl: 'table.component.html',
   styleUrls: ['table.component.scss']
 })
-export class DataTable implements DataTableParams, OnInit {
+export class DataTable<T> implements DataTableParams, OnInit {
 
   // UI state without input:
   indexColumnVisible: boolean;
@@ -41,15 +41,15 @@ export class DataTable implements DataTableParams, OnInit {
   private _sortAsc = true;
   private _offset = 0;
   private _limit = 10;
-  private _items: any[] = [];
+  private _items: T[] = [];
   private _scheduledReload: number = null;
   private _selectAllCheckbox = false;
   private _displayParams = <DataTableParams>{};
   private _reloading = false;
   private _resizeInProgress = false;
 
-  selectedRow: DataTableRow;
-  selectedRows: DataTableRow[] = [];
+  selectedRow: DataTableRow<T>;
+  selectedRows: DataTableRow<T>[] = [];
   resizeLimit = 30;
 
   @Input()
@@ -61,9 +61,9 @@ export class DataTable implements DataTableParams, OnInit {
   @Input()
   indexColumnHeader = '';
   @Input()
-  rowColors: RowCallback;
+  rowColors: RowCallback<T>;
   @Input()
-  rowTooltip: RowCallback;
+  rowTooltip: RowCallback<T>;
   @Input()
   selectColumn = false;
   @Input()
@@ -83,13 +83,13 @@ export class DataTable implements DataTableParams, OnInit {
 
   // event handlers:
   @Output()
-  rowClick: EventEmitter<DataTableRowEvent> = new EventEmitter();
+  rowClick: EventEmitter<DataTableRowEvent<T>> = new EventEmitter();
   @Output()
-  rowDoubleClick: EventEmitter<DataTableRowEvent> = new EventEmitter();
+  rowDoubleClick: EventEmitter<DataTableRowEvent<T>> = new EventEmitter();
   @Output()
-  headerClick: EventEmitter<DataTableHeaderEvent> = new EventEmitter();
+  headerClick: EventEmitter<DataTableHeaderEvent<T>> = new EventEmitter();
   @Output()
-  cellClick: EventEmitter<DataTableCellEvent> = new EventEmitter();
+  cellClick: EventEmitter<DataTableCellEvent<T>> = new EventEmitter();
   @Output()
   reload: EventEmitter<DataTableParams> = new EventEmitter();
 
@@ -97,9 +97,9 @@ export class DataTable implements DataTableParams, OnInit {
   @ContentChild(forwardRef(() => DataTableTitle))
   title: DataTableTitle;
   @ContentChildren(DataTableColumn)
-  columns: QueryList<DataTableColumn>;
+  columns: QueryList<DataTableColumn<T>>;
   @ViewChildren(DataTableRow)
-  rows: QueryList<DataTableRow>;
+  rows: QueryList<DataTableRow<T>>;
   @ContentChild('expandTemplate')
   expandTemplate: TemplateRef<any>;
 
@@ -199,9 +199,9 @@ export class DataTable implements DataTableParams, OnInit {
     return Array.from({length: this.displayParams!.limit - this.items.length});
   }
 
-  getRowColor(item: any, index: number, row: DataTableRow) {
+  getRowColor(item: any, index: number, row: DataTableRow<T>) {
     if (this.rowColors !== undefined) {
-      return (<RowCallback>this.rowColors)(item, row, index);
+      return (<RowCallback<T>>this.rowColors)(item, row, index);
     }
   }
 
@@ -216,15 +216,15 @@ export class DataTable implements DataTableParams, OnInit {
     this.reload.emit(this._getRemoteParameters());
   }
 
-  rowClicked(row: DataTableRow, event: MouseEvent) {
+  rowClicked(row: DataTableRow<T>, event: MouseEvent) {
     this.rowClick.emit({row, event});
   }
 
-  rowDoubleClicked(row: DataTableRow, event: MouseEvent) {
+  rowDoubleClicked(row: DataTableRow<T>, event: MouseEvent) {
     this.rowDoubleClick.emit({row, event});
   }
 
-  headerClicked(column: DataTableColumn, event: MouseEvent) {
+  headerClicked(column: DataTableColumn<T>, event: MouseEvent) {
     if (!this._resizeInProgress) {
       this.headerClick.emit({column, event});
     } else {
@@ -233,11 +233,11 @@ export class DataTable implements DataTableParams, OnInit {
     }
   }
 
-  cellClicked(column: DataTableColumn, row: DataTableRow, event: MouseEvent) {
+  cellClicked(column: DataTableColumn<T>, row: DataTableRow<T>, event: MouseEvent) {
     this.cellClick.emit({row, column, event});
   }
 
-  onRowSelectChanged(row: DataTableRow) {
+  onRowSelectChanged(row: DataTableRow<T>) {
     // maintain the selectedRow(s) view
     if (this.multiSelect) {
       let index = this.selectedRows.indexOf(row);
@@ -263,7 +263,7 @@ export class DataTable implements DataTableParams, OnInit {
     }
   }
 
-  resizeColumnStart(event: MouseEvent, column: DataTableColumn, columnElement: HTMLElement) {
+  resizeColumnStart(event: MouseEvent, column: DataTableColumn<T>, columnElement: HTMLElement) {
     this._resizeInProgress = true;
     drag(event, {
       move: (moveEvent: MouseEvent, dx: number) => {
@@ -336,7 +336,7 @@ export class DataTable implements DataTableParams, OnInit {
     return params;
   }
 
-  private _sortColumn(column: DataTableColumn) {
+  private _sortColumn(column: DataTableColumn<T>) {
     if (column.sortable) {
       let ascending = this.sortBy === column.property ? !this.sortAsc : true;
       this.sort(column.property, ascending);

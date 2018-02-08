@@ -7,14 +7,14 @@ import {DataTable} from '../../';
   templateUrl: 'row.component.html',
   styleUrls: ['row.component.scss']
 })
-export class DataTableRow implements OnDestroy {
+export class DataTableRow<T> implements OnDestroy {
 
   // row selection:
   private _selected: boolean;
   expanded: boolean;
 
   @Input()
-  item: any;
+  item: T;
   @Input()
   index: number;
 
@@ -24,7 +24,7 @@ export class DataTableRow implements OnDestroy {
   // FIXME is there no template keyword for this in angular 2?
   public _this = this;
 
-  constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable) {
+  constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable<T>) {
   }
 
   get selected() {
