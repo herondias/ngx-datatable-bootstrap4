@@ -1,76 +1,52 @@
 // Helper: root() is defined at the bottom
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 // Webpack Plugins
-var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
-var autoprefixer = require('autoprefixer');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 /**
  * Env
  * Get npm lifecycle event to identify the environment
  */
-var ENV = process.env.npm_lifecycle_event;
-var isTestWatch = ENV === 'test-watch';
-var isTest = ENV === 'test' || isTestWatch;
-var isProd = ENV === 'build';
+const ENV = process.env.npm_lifecycle_event;
+const isTestWatch = ENV === 'test-watch';
+const isTest = ENV === 'test' || isTestWatch;
+const isProd = ENV === 'build';
 
 module.exports = function makeWebpackConfig() {
-  /**
-   * Config
-   * Reference: http://webpack.github.io/docs/configuration.html
-   * This is the object where all configuration gets set
-   */
-  var config = {};
 
-  /**
-   * Devtool
-   * Reference: http://webpack.github.io/docs/configuration.html#devtool
-   * Type of sourcemap to use per build type
-   */
-  if (isProd) {
-    config.devtool = 'source-map';
-  }
-  else if (isTest) {
-    config.devtool = 'inline-source-map';
-  }
-  else {
-    config.devtool = 'eval-source-map';
-  }
-
-  /**
-   * Entry
-   * Reference: http://webpack.github.io/docs/configuration.html#entry
-   */
-  config.entry = isTest ? {} : {
-    'polyfills': './src/polyfills.ts',
-    'vendor': './src/vendor.ts',
-    'app': './src/main.ts' // our angular app
+  var config = {
+    mode: isProd ? 'production' : 'development',
+    devtool: isProd ? 'source-map' : isTest ? 'inline-source-map' : 'eval-source-map',
+    entry: isTest ? {} : {
+      'polyfills': './src/polyfills.ts',
+      'vendor': './src/vendor.ts',
+      'app': './src/main.ts' // our angular app
+    },
+    output: isTest ? {} : {
+      path: root('dist'),
+      // publicPath: isProd ? '/' : 'http://localhost:8080/',
+      filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
+      chunkFilename: isProd ? '[id].[hash].chunk.js' : '[id].chunk.js'
+    },
+    resolve: {
+      // only discover files that have those extensions
+      extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html']
+    },
+    optimization: {},
+    devServer: {
+      contentBase: './src/public',
+      historyApiFallback: true,
+      host: '0.0.0.0',
+      quiet: true,
+      stats: 'minimal' // none (or false), errors-only, minimal, normal (or true) and verbose
+    }
   };
 
-  /**
-   * Output
-   * Reference: http://webpack.github.io/docs/configuration.html#output
-   */
-  config.output = isTest ? {} : {
-    path: root('dist'),
-    // publicPath: isProd ? '/' : 'http://localhost:8080/',
-    filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
-    chunkFilename: isProd ? '[id].[hash].chunk.js' : '[id].chunk.js'
-  };
-
-  /**
-   * Resolve
-   * Reference: http://webpack.github.io/docs/configuration.html#resolve
-   */
-  config.resolve = {
-    // only discover files that have those extensions
-    extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html']
-  };
-
-  var atlOptions = '';
+  let atlOptions = '';
   if (isTest && !isTestWatch) {
     // awesome-typescript-loader needs to output inlineSourceMap for code coverage to work with source maps.
     atlOptions = 'inlineSourceMap=true&sourceMap=false';
@@ -87,8 +63,9 @@ module.exports = function makeWebpackConfig() {
       // Support for .ts files.
       {
         test: /\.ts$/,
-        loaders: ['awesome-typescript-loader?' + atlOptions, 'angular2-template-loader', '@angularclass/hmr-loader'],
-        exclude: [isTest ? /\.(e2e)\.ts$/ : /\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
+        // loaders: ['awesome-typescript-loader?' + atlOptions, 'angular2-template-loader', '@angularclass/hmr-loader'],
+        loaders: ['ts-loader', 'angular2-template-loader', '@angularclass/hmr-loader'],
+        exclude: [/\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
       },
 
       // copy those assets to output
@@ -112,8 +89,8 @@ module.exports = function makeWebpackConfig() {
         test: /\.css$/,
         exclude: root('src', 'app'),
         loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: ['css-loader', 'postcss-loader']
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader']
         })
       },
       // all css required in src/app files will be merged in js files
@@ -130,8 +107,8 @@ module.exports = function makeWebpackConfig() {
         test: /\.(scss|sass)$/,
         exclude: [root('src', 'app'), root('src', 'datatable')],
         loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: ['css-loader', 'postcss-loader', 'sass-loader']
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader', 'sass-loader']
         })
       },
       // all css required in src/app files will be merged in js files
@@ -147,7 +124,8 @@ module.exports = function makeWebpackConfig() {
     config.module.rules.push({
       test: /\.ts$/,
       enforce: 'pre',
-      loader: 'tslint-loader'
+      loader: 'tslint-loader',
+      exclude: [/\.spec\.ts$/, /\.e2e\.ts$/, /node_modules/]
     });
   }
 
@@ -207,14 +185,9 @@ module.exports = function makeWebpackConfig() {
   ];
 
   if (!isTest && !isTestWatch) {
-    config.plugins.push(
-      // Generate common chunks if necessary
-      // Reference: https://webpack.github.io/docs/code-splitting.html
-      // Reference: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
-      new CommonsChunkPlugin({
-        name: ['vendor', 'polyfills']
-      }),
+    config.optimization.runtimeChunk = "single";
 
+    config.plugins.push(
       // Inject script and link tags into html files
       // Reference: https://github.com/ampedandwired/html-webpack-plugin
       new HtmlWebpackPlugin({
@@ -228,20 +201,6 @@ module.exports = function makeWebpackConfig() {
       new ExtractTextPlugin({filename: 'css/[name].[hash].css', disable: !isProd})
     );
   }
-
-
-  /**
-   * Dev server configuration
-   * Reference: http://webpack.github.io/docs/configuration.html#devserver
-   * Reference: http://webpack.github.io/docs/webpack-dev-server.html
-   */
-  config.devServer = {
-    contentBase: './src/public',
-    historyApiFallback: true,
-    host: '0.0.0.0',
-    quiet: true,
-    stats: 'minimal' // none (or false), errors-only, minimal, normal (or true) and verbose
-  };
 
   return config;
 }();
