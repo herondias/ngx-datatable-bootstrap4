@@ -14,7 +14,7 @@ import {PxPipe} from './utils/px.pipe';
 export * from './components/types';
 export * from './tools/data-table-resource';
 
-export {DataTable, DataTableColumn, DataTableRow, DataTableTitle};
+export {DataTable, DataTableColumn, DataTableRow, DataTableTitle, DataTablePagination};
 
 @NgModule({
   imports: [
@@ -32,7 +32,7 @@ export {DataTable, DataTableColumn, DataTableRow, DataTableTitle};
     HideDirective,
     MinPipe
   ],
-  exports: [DataTable, DataTableColumn, DataTableTitle]
+  exports: [DataTable, DataTableColumn, DataTableTitle, DataTablePagination]
 })
 export class DataTableModule {
 }
