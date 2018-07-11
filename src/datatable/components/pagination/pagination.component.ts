@@ -12,6 +12,30 @@ export class DataTablePagination<T> {
   constructor(@Inject(forwardRef(() => DataTable)) public dataTable: DataTable<T>) {
   }
 
+  get maxPage() {
+    return Math.ceil(this.dataTable.itemCount / this.dataTable.limit);
+  }
+
+  get limit() {
+    return this.dataTable.limit;
+  }
+
+  set limit(value) {
+    if ( typeof +value === 'number' && +value >= 0 ) {
+      this.dataTable.limit = Math.floor(+value);
+    }
+  }
+
+  get page() {
+    return this.dataTable.page;
+  }
+
+  set page(value) {
+    if ( typeof +value === 'number' && +value >= 0 ) {
+      this.dataTable.page = Math.floor(+value);
+    }
+  }
+
   pageBack() {
     this.dataTable.offset -= Math.min(this.dataTable.limit, this.dataTable.offset);
   }
@@ -28,24 +52,10 @@ export class DataTablePagination<T> {
     this.dataTable.offset = (this.maxPage - 1) * this.dataTable.limit;
   }
 
-  get maxPage() {
-    return Math.ceil(this.dataTable.itemCount / this.dataTable.limit);
-  }
-
-  get limit() {
-    return this.dataTable.limit;
-  }
-
-  set limit(value) {
-    // TODO better way to handle that value of number <input> is string?
-    this.dataTable.limit = Number(<any>value);
-  }
-
-  get page() {
-    return this.dataTable.page;
-  }
-
-  set page(value) {
-    this.dataTable.page = Number(<any>value);
+  keyPress(event: any) {
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!(typeof +inputChar === 'number' && +inputChar >= 0)) {
+      event.preventDefault();
+    }
   }
 }
