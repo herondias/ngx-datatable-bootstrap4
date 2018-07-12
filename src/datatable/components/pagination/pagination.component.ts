@@ -21,7 +21,7 @@ export class DataTablePagination<T> {
   }
 
   set limit(value) {
-    if ( typeof +value === 'number' && +value >= 0 ) {
+    if (Number(value) >= 0) {
       this.dataTable.limit = Math.floor(+value);
     }
   }
@@ -31,7 +31,7 @@ export class DataTablePagination<T> {
   }
 
   set page(value) {
-    if ( typeof +value === 'number' && +value >= 0 ) {
+    if (Number(value) >= 0) {
       this.dataTable.page = Math.floor(+value);
     }
   }
@@ -54,7 +54,7 @@ export class DataTablePagination<T> {
 
   keyPress(event: any) {
     let inputChar = String.fromCharCode(event.charCode);
-    if (!(typeof +inputChar === 'number' && +inputChar >= 0)) {
+    if (!(Number(inputChar) >= 0)) {
       event.preventDefault();
     }
   }
