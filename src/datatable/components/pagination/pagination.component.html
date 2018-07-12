@@ -11,7 +11,9 @@
         </div>
         <input #limitInput type="number" class="form-control" min="1" step="1"
                [ngModel]="limit" (blur)="limit = limitInput.value"
-               (keyup.enter)="limit = limitInput.value" (keyup.esc)="limitInput.value = limit"/>
+               (keyup.enter)="limit = limitInput.value"
+               (keyup.esc)="limitInput.value = limit"
+               (keypress)="keyPress($event)"/>
       </div>
     </li>
     <li class="nav-item">
@@ -21,7 +23,8 @@
         <div class="input-group">
           <input #pageInput type="number" class="form-control" min="1" step="1" max="{{maxPage}}"
                  [ngModel]="page" (blur)="page = pageInput.value"
-                 (keyup.enter)="page = pageInput.value" (keyup.esc)="pageInput.value = page"/>
+                 (keyup.enter)="page = pageInput.value" (keyup.esc)="pageInput.value = page"
+                 (keypress)="keyPress($event)"/>
           <div class="input-group-append">
             <span class="input-group-text">/&nbsp;{{dataTable.lastPage}}</span>
           </div>
