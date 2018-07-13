@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {DataTable, DataTableParams, DataTableResource} from '../../datatable';
+import {DataTable, DataTableParams, DataTableResource} from '../datatable';
 import {cars} from './demo2-data';
 
 interface Car {

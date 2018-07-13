@@ -1,7 +1,7 @@
 export type MoveHandler = (event: MouseEvent, dx: number, dy: number, x: number, y: number) => void;
 export type UpHandler = (event: MouseEvent, x: number, y: number, moved: boolean) => void;
 
-export function drag(event: MouseEvent, {move: move, up: up}: { move: MoveHandler, up?: UpHandler }) {
+export function drag(event: MouseEvent, {move, up}: { move: MoveHandler, up?: UpHandler }) {
 
   let startX = event.pageX;
   let startY = event.pageY;

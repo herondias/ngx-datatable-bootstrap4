@@ -1,6 +1,6 @@
 import {DatePipe} from '@angular/common';
 import {Component} from '@angular/core';
-import {DataTableParams, DataTableResource} from '../../datatable';
+import {DataTableParams, DataTableResource} from '../datatable';
 import {films} from './demo4-data';
 
 interface Film {
@@ -61,12 +61,12 @@ export class Demo4 {
     this.months = months;
   }
 
-  private incDate() {
+  incDate() {
     this.today.setMonth(this.today.getMonth() + 1);
     this.constructDates(this.today);
   }
 
-  private decDate() {
+  decDate() {
     this.today.setMonth(this.today.getMonth() - 1);
     this.constructDates(this.today);
   }

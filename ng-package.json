@@ -3,7 +3,7 @@
   "dest": "dist",
   "workingDirectory": ".ng_build",
   "lib": {
-    "entryFile": "src/datatable/index.ts",
+    "entryFile": "src/app/datatable/index.ts",
     "externals": {
       "rxjs/operators": "Rx.Observable.prototype",
       "rxjs/operator": "Rx.Observable.prototype",
@@ -15,5 +15,10 @@
       "rxjs/operators/toArray": "Rx.Observable.prototype",
       "rxjs/operators/take": "Rx.Observable.prototype"
     }
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "@angular/core",
+    "@angular/common",
+    "@angular/forms"
+  ]
 }

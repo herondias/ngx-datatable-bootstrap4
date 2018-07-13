@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {DataTableParams, DataTableResource, DataTableRowEvent} from '../../datatable';
 import persons from './demo1-data';
+import {DataTableParams, DataTableResource, DataTableRowEvent} from '../datatable';
 
 interface Person {
   name?: string

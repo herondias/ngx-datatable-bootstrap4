@@ -14,7 +14,7 @@ export class DataTableTitleComponent<T> {
   }
 
   @HostListener('document:click', ['$event'])
-  _closeSelector() {
+  _closeSelector($event) {
     this.columnSelectorOpen = false;
   }
 }

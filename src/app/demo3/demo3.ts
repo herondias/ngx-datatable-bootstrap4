@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {DataTable, DataTableParams, DataTableResource, DataTableTranslations} from '../../datatable';
+import {DataTable, DataTableParams, DataTableResource, DataTableTranslations} from '../datatable';
 import {films} from './demo3-data';
 
 interface Film {
