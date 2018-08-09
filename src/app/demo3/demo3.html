@@ -3,18 +3,17 @@
               [items]="films"
               [itemCount]="filmCount"
               (reload)="reloadFilms($event)"
-
               [limit]="8"
               [sortBy]="'rating'"
               [sortAsc]="false"
-
               [selectColumn]="true"
               [multiSelect]="false"
               [substituteRows]="false"
               [expandableRows]="true"
               [translations]="translations"
               [indexColumnHeader]="'#'"
-              [selectOnRowClick]="true">
+              [selectOnRowClick]="true"
+              (rowExpand)="rowExpand($event)">
     <data-table-title title="Films (Single selection)"></data-table-title>
     <ng-template #expandTemplate let-item="item">
       <div [textContent]="item.description" style="padding: 5px; color: gray"></div>

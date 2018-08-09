@@ -85,6 +85,8 @@ export class DataTable<T> implements DataTableParams, OnInit {
   @Output()
   rowClick: EventEmitter<DataTableRowEvent<T>> = new EventEmitter();
   @Output()
+  rowExpand: EventEmitter<DataTableRowEvent<T>> = new EventEmitter();
+  @Output()
   rowDoubleClick: EventEmitter<DataTableRowEvent<T>> = new EventEmitter();
   @Output()
   headerClick: EventEmitter<DataTableHeaderEvent<T>> = new EventEmitter();
@@ -235,6 +237,10 @@ export class DataTable<T> implements DataTableParams, OnInit {
 
   cellClicked(column: DataTableColumn<T>, row: DataTableRow<T>, event: MouseEvent) {
     this.cellClick.emit({row, column, event});
+  }
+
+  rowExpanded(row: DataTableRow<T>, event: MouseEvent) {
+    this.rowExpand.emit({row, event});
   }
 
   onRowSelectChanged(row: DataTableRow<T>) {

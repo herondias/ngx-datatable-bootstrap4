@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {DataTable, DataTableParams, DataTableResource, DataTableTranslations} from '../datatable';
 import {films} from './demo3-data';
+import {DataTableRowEvent} from '../datatable/components/types';
 
 interface Film {
   title?: string
@@ -42,4 +43,7 @@ export class Demo3 {
   cellColor(car: any) {
     return 'rgb(255, 255,' + (155 + Math.floor(100 - ((car.rating - 8.7) / 1.3) * 100)) + ')';
   };
+
+  rowExpand(event: DataTableRowEvent<Film>) {
+  }
 }
