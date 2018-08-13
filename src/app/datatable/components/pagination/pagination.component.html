@@ -1,6 +1,6 @@
 <div class="navbar p-0 pagination-component">
   <div>
-    {{dataTable.translations.paginationRange}}:&nbsp;{{dataTable.offset + 1}}&nbsp;-
+    {{dataTable.translations.paginationRange}}:&nbsp;{{dataTable.offset < 0 ? 0 : dataTable.offset + 1}}&nbsp;-
     {{[dataTable.offset + dataTable.limit , dataTable.itemCount] | min}}&nbsp;/&nbsp;{{dataTable.itemCount}}
   </div>
   <ul class="nav justify-content-end">
