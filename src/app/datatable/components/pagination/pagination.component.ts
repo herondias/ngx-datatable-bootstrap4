@@ -21,7 +21,7 @@ export class DataTablePagination<T> {
   }
 
   set limit(value) {
-    if (Number(value) >= 0) {
+    if (Number(value) > 0) {
       this.dataTable.limit = Math.floor(+value);
     }
   }
@@ -31,7 +31,7 @@ export class DataTablePagination<T> {
   }
 
   set page(value) {
-    if (Number(value) >= 0) {
+    if (Number(value) > 0) {
       this.dataTable.page = Math.floor(+value);
     }
   }
