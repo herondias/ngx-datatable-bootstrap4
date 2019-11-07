@@ -59,7 +59,7 @@
     "happypack": "next",
     "html-webpack-plugin": "*",
     "ng-packagr": "*",
-    "node-sass": "*",
+    "node-sass": "^4.13.0",
     "null-loader": "*",
     "postcss-loader": "*",
     "raw-loader": "*",
